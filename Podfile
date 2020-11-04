@@ -7,6 +7,8 @@ target 'YandexWeather' do
 
   pod 'Alamofire', '~> 5.2'
   pod 'SwiftyJSON', '~> 4.0'
+  pod 'FlexLayout'
+  pod 'PinLayout'
 
 
   # Pods for YandexWeather

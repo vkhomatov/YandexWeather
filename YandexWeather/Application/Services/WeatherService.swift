@@ -9,6 +9,8 @@
 import UIKit
 import Alamofire
 import CoreLocation
+import SwiftyJSON
+
 
 
 class WeatherService {
@@ -20,9 +22,6 @@ class WeatherService {
     
     /// cочетания языка и страны, для которых будут возвращены данные погодных формулировок.
     private let lang = "ru_RU"
-    
-//    /// количество дней в прогнозе, включая текущий.
-//    private let limit = "2"
     
     /// для каждого из дней ответ будет содержать прогноз погоды по часам
     private let hours = "false"
@@ -47,18 +46,13 @@ class WeatherService {
     
     
     
-    func loadWeatherData(city: String, days: String) {
-        
-        locationManager.getLocation(forPlaceCalled: city) { location in
-            
-            guard let location = location else { return }
-            
+    func loadWeatherData(coordinate: CLLocationCoordinate2D, days: String, completion: ((Swift.Result<CityWeather, Error>) -> Void)? = nil) {
             
             let parameters: Parameters = [
                 
-                "lon": location.coordinate.longitude,
+                "lon": coordinate.longitude,
                 
-                "lat": location.coordinate.latitude,
+                "lat": coordinate.latitude,
                 
                 "lang": self.lang,
                 
@@ -78,14 +72,19 @@ class WeatherService {
                 case let .success(data):
                     print(data)
                     
+                    let json = JSON(data)
+                    let weather = CityWeather(from: json)
+                    completion?(.success(weather))
+                    
+                    print("\nWeatherService.session.request: данные загружены")
+                    
                 case let .failure(error):
-                    print("ОШИБКА ЗАГРУЗКИ: \(error)")
+                    print("\nWeatherService.session.request: ошибка при загрузке погодных данных - \(error)")
                     
                 }
                 
             }
         }
         
-    }
 
 }

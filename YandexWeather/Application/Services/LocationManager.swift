@@ -12,14 +12,22 @@ import CoreLocation
 
 class LocationManager: NSObject {
     
-    private let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
+    var userLocation = CLLocation()
+    var getNewLocation: (() -> Void)?
+
+
     
     override init() {
         super.init()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        //self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+
     }
+    
 }
 
 extension LocationManager: CLLocationManagerDelegate {
@@ -27,18 +35,25 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager,
                          didChangeAuthorization status: CLAuthorizationStatus) {
-
         switch status {
-    
-        case .notDetermined         : print("notDetermined")        // location permission not asked for yet
-        case .authorizedWhenInUse   : print("authorizedWhenInUse")  // location authorized
-        case .authorizedAlways      : print("authorizedAlways")     // location authorized
-        case .restricted            : print("restricted")           // TODO: handle
-        case .denied                : print("denied")               // TODO: handle
-        @unknown default:
-            fatalError()
+        case .notDetermined       : print("didChangeAuthorization: notDetermined")
+        case .authorizedWhenInUse : print("didChangeAuthorization: authorizedWhenInUse")
+        case .authorizedAlways    : print("didChangeAuthorization: authorizedAlways")
+        case .restricted          : print("didChangeAuthorization: restricted")
+        case .denied              : print("didChangeAuthorization: denied")
+        @unknown default          : fatalError()
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.userLocation = locations[0] as CLLocation
+    //    manager.allowsBackgroundLocationUpdates = true
+        if let callback = self.getNewLocation {
+            callback()
+        }
+    }
+    
+    
 }
 
 
@@ -95,4 +110,5 @@ extension LocationManager {
                completion(placemark)
            }
        }
+    
 }
