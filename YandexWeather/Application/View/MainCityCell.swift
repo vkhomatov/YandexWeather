@@ -11,80 +11,78 @@ import PinLayout
 
 
 class MainCityCell: UITableViewCell {
-
+    
     let objectNameLabel = UILabel(frame: .zero)
     let objectDescriptionLabel = UILabel(frame: .zero)
     let temperatureLabel = UILabel(frame: .zero)
-    let cloudsView = UIImageView()
-    
-    
+    let weatherIconImageView = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-           super.init(style: style, reuseIdentifier: reuseIdentifier)
-           self.setSubviews()
-           self.layoutSubviews()
-       }
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.setSubviews()
+        self.layoutSubviews()
+    }
     
-     required init?(coder aDecoder: NSCoder) {
-           super.init(coder: aDecoder)
-       }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     private func setSubviews() {
-           
-           self.addSubview(objectNameLabel)
-           self.addSubview(objectDescriptionLabel)
-           self.addSubview(temperatureLabel)
-           self.addSubview(cloudsView)
-           
-       }
+        
+        self.addSubview(objectNameLabel)
+        self.addSubview(objectDescriptionLabel)
+        self.addSubview(temperatureLabel)
+        self.addSubview(weatherIconImageView)
+        
+    }
     
     
     override func layoutSubviews() {
-           super.layoutSubviews()
-//        self.layer.cornerRadius = self.frame.size.height / 16
-    //       self.contentView.layer.masksToBounds = true
+        super.layoutSubviews()
         self.backgroundColor = .systemYellow
-        
-//        self.layer.shadowColor = UIColor.black.cgColor
-//        self.layer.shadowOpacity = 0.2
-//        self.layer.shadowOffset = .init(width: 2, height: 2)
-//        self.layer.shadowRadius = 2
         
         objectNameLabel.numberOfLines = 2
         objectNameLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         objectNameLabel.textAlignment = .natural
         objectNameLabel.textColor = .black
-       // objectNameLabel.backgroundColor = .none
         
-        objectNameLabel.pin.start(10)
-      //  .vCenter()
-        .top(10)
-            .width(self.frame.width/2)
-            .sizeToFit(.width)
-        
-        
-        objectDescriptionLabel.numberOfLines = 3
+        objectDescriptionLabel.numberOfLines = 2
         objectDescriptionLabel.font = UIFont.systemFont(ofSize: 10, weight: .light)
         objectDescriptionLabel.textAlignment = .left
         objectDescriptionLabel.textColor = .black
-       // objectDescriptionLabel.backgroundColor = .none
         
-       // let width = self.frame.width/2
+        temperatureLabel.numberOfLines = 1
+        temperatureLabel.font = UIFont.systemFont(ofSize: 60, weight: .light)
+        temperatureLabel.textAlignment = .center
+        temperatureLabel.textColor = .black
+        
+        weatherIconImageView.contentMode = .scaleAspectFit
+        weatherIconImageView.layer.cornerRadius = self.frame.size.height / 16
+        weatherIconImageView.layer.masksToBounds = true
+        
+        
+        objectNameLabel.pin.start(10)
+            .top(10)
+            .width(self.frame.width/2)
+            .sizeToFit(.width)
+        
         objectDescriptionLabel.pin.below(of: objectNameLabel, aligned: .start)
-        //.size(of: objectNameLabel) //(objectNameLabel.bounds.width)
-        //.wrapContent()
-        .width(self.frame.width/2)
-       // .he
+            .width(self.frame.width/2)
             .marginTop(2.0)
             .sizeToFit(.width)
-
-                //  .sizeToFit(.content)
-//        objectDescriptionLabel.pin.start(10)
-//            .top(20)
-//            .sizeToFit(.width)
-
-          
-       }
+        
+        temperatureLabel.pin
+            .right(10.0)
+            .sizeToFit(.content)
+            .vCenter()
+        
+        weatherIconImageView.pin
+            .vCenter()
+            .right(120)
+            .width(self.frame.height-25)
+            .height(self.frame.height-25)
+        
+    }
     
     override var frame: CGRect {
         get {
@@ -92,25 +90,22 @@ class MainCityCell: UITableViewCell {
         }
         set (newFrame) {
             var frame = newFrame
-            let newWidth = frame.width * 0.97 // get 97% width here
+            let newWidth = frame.width * 0.97
             let space = (frame.width - newWidth) / 2
             frame.size.width = newWidth
             frame.origin.x += space
-
             super.frame = frame
-
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        objectNameLabel.text = nil
+        objectDescriptionLabel.text = nil
+        temperatureLabel.text = nil
+        weatherIconImageView.image = nil
+        isUserInteractionEnabled = true
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
+    
 }

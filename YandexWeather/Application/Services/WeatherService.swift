@@ -11,12 +11,10 @@ import Alamofire
 import CoreLocation
 import SwiftyJSON
 
-
-
 class WeatherService {
     
     private let locationManager = LocationManager()
-
+    
     /// основной путь для запроса к серверу
     private let baseUrl = "https://api.weather.yandex.ru/v2/forecast?"
     
@@ -44,47 +42,38 @@ class WeatherService {
     }()
     
     
-    
-    
     func loadWeatherData(coordinate: CLLocationCoordinate2D, days: String, completion: ((Swift.Result<CityWeather, Error>) -> Void)? = nil) {
+        
+        let parameters: Parameters = [
             
-            let parameters: Parameters = [
-                
-                "lon": coordinate.longitude,
-                
-                "lat": coordinate.latitude,
-                
-                "lang": self.lang,
-                
-                "limit": days,
-                
-                "hours": self.hours,
-                
-                "extra": self.extra
-                
-            ]
+            "lon": coordinate.longitude,
+            "lat": coordinate.latitude,
+            "lang": self.lang,
+            "limit": days,
+            "hours": self.hours,
+            "extra": self.extra
             
+        ]
+        
+        
+        WeatherService.session.request(self.baseUrl, method: .get, parameters: parameters).responseJSON { repsonse in
             
-            WeatherService.session.request(self.baseUrl, method: .get, parameters: parameters).responseJSON { repsonse in
+            switch repsonse.result {
                 
-                switch repsonse.result {
-                    
-                case let .success(data):
-                    print(data)
-                    
-                    let json = JSON(data)
-                    let weather = CityWeather(from: json)
-                    completion?(.success(weather))
-                    
-                    print("\nWeatherService.session.request: данные загружены")
-                    
-                case let .failure(error):
-                    print("\nWeatherService.session.request: ошибка при загрузке погодных данных - \(error)")
-                    
-                }
+            case let .success(data):
+                
+                let json = JSON(data)
+                let weather = CityWeather(from: json)
+                completion?(.success(weather))
+                
+                print("\nWeatherService.session.request: данные загружены")
+                
+            case let .failure(error):
+                print("\nWeatherService.session.request: ошибка при загрузке погодных данных - \(error)")
                 
             }
+            
         }
-        
-
+    }
+    
 }
