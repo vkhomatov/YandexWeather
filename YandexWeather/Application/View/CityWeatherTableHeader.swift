@@ -48,7 +48,7 @@ class CityWeatherTableHeader: UIView {
         
         weatherIconImageView.contentMode = .scaleAspectFit
         weatherIconImageView.layer.masksToBounds = true
-        weatherIconImageView.layer.opacity = 0.25
+        weatherIconImageView.layer.opacity = 0.3
               
         
         objectNameLabel.pin

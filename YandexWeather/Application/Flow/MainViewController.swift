@@ -215,11 +215,12 @@ class MainViewController: UIViewController {
                     if (place.coordinates.latitude == coordinates.latitude) && (place.coordinates.longitude == coordinates.longitude) {
                         if let num = self.places.firstIndex(of: place) {
                             if self.weathers.count-1 < num {
-                                //self.weathers.append(contentsOf: repeatElement(CityWeather(), count: num - self.weathers.count))
                                 self.weathers.append(CityWeather())
                             }
+                            if self.places.count-1 < num {
+                                self.weathers.append(contentsOf: repeatElement(CityWeather(), count: num - self.weathers.count))
+                            }
                             self.weathers[num] = weather
-
                         }
                     }
                 }
@@ -264,13 +265,6 @@ class MainViewController: UIViewController {
           //  print("Погода №2 \(self.weathers.count-1)")
 
         }
-//        for num in 0...self.places.count-1 {
-//            print("\nPlace = \(places[num].name)")
-//            print("\nPlaceCoord = \(places[num].coordinates)")
-//            self.CityWeatherLoad(coordinates: places[num].coordinates, days: "7")
-//            //print("Wether = \(self.weathers[num].temp)")
-//
-//        }
         
         tableView.refreshControl?.endRefreshing()
     }
