@@ -22,9 +22,8 @@ class LocationManager: NSObject {
         super.init()
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        //self.locationManager.requestAlwaysAuthorization()
+       // self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
 
     }
     
@@ -37,8 +36,12 @@ extension LocationManager: CLLocationManagerDelegate {
                          didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined       : print("didChangeAuthorization: notDetermined")
-        case .authorizedWhenInUse : print("didChangeAuthorization: authorizedWhenInUse")
-        case .authorizedAlways    : print("didChangeAuthorization: authorizedAlways")
+        case .authorizedWhenInUse :
+            self.locationManager.startUpdatingLocation()
+            print("didChangeAuthorization: authorizedWhenInUse")
+        case .authorizedAlways    :
+           // self.locationManager.startUpdatingLocation()
+            print("didChangeAuthorization: authorizedAlways")
         case .restricted          : print("didChangeAuthorization: restricted")
         case .denied              : print("didChangeAuthorization: denied")
         @unknown default          : fatalError()
