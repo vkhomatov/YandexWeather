@@ -22,7 +22,7 @@
 		5851C5AD2552FA97000BA897 /* CityWeatherTableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5851C5AC2552FA97000BA897 /* CityWeatherTableHeader.swift */; };
 		5851C5AF255303ED000BA897 /* CityWeatherTableFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5851C5AE255303ED000BA897 /* CityWeatherTableFooter.swift */; };
 		5851C5B325555F08000BA897 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5851C5B225555F08000BA897 /* NetworkMonitor.swift */; };
-		6F9D97EA8F850C60732DEAC0 /* Pods_YandexWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C13A49BF4F1B6A4F735207 /* Pods_YandexWeather.framework */; };
+		5888CD5B2570289A007549E4 /* Pods_YandexWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C13A49BF4F1B6A4F735207 /* Pods_YandexWeather.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6F9D97EA8F850C60732DEAC0 /* Pods_YandexWeather.framework in Frameworks */,
+				5888CD5B2570289A007549E4 /* Pods_YandexWeather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +437,7 @@
 			baseConfigurationReference = 4F24A67B03A4139213DF5F73 /* Pods-YandexWeather.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AY6Y7FXTL9;
 				INFOPLIST_FILE = YandexWeather/Resources/Info.plist;
@@ -446,6 +447,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = MH.YandexWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -456,6 +458,7 @@
 			baseConfigurationReference = 083E810BB273DCBDEB96ACD3 /* Pods-YandexWeather.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AY6Y7FXTL9;
 				INFOPLIST_FILE = YandexWeather/Resources/Info.plist;
@@ -465,6 +468,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = MH.YandexWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

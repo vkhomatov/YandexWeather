@@ -7,15 +7,143 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2C3DB2B0-784D-4B9B-BF3B-9DC1167E27CE"
+            uuid = "C59F299E-ECE4-4CF2-9F58-7AA5E25197E7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YandexWeather/Application/Flow/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "getCurrentLocation()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C90117E-295A-492D-B9AC-AF03B8AA11D1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YandexWeather/Application/Flow/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "places"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "03D617BA-DF84-410E-AA2E-F07F38D7E7E9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YandexWeather/Application/Services/LocationManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "locationManager(_:didUpdateLocations:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3488DD26-DE30-4956-8B32-49424ED7ABDD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YandexWeather/Application/Flow/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "getCurrentLocation()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3488DD26-DE30-4956-8B32-49424ED7ABDD - cec52452c3c81165"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in YandexWeather.MainViewController.(getCurrentLocation in _1FAEAA6F8595A5B8790A65EA3355A466)() -&gt; ()"
+                  moduleName = "YandexWeather"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/YandexWeather/YandexWeather/Application/Flow/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "173">
+               </Location>
+               <Location
+                  uuid = "3488DD26-DE30-4956-8B32-49424ED7ABDD - a0874e8163e2e52e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.CLPlacemark&gt;) -&gt; () in closure #1 () -&gt; () in YandexWeather.MainViewController.(getCurrentLocation in _1FAEAA6F8595A5B8790A65EA3355A466)() -&gt; ()"
+                  moduleName = "YandexWeather"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/YandexWeather/YandexWeather/Application/Flow/MainViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "244">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DEBFE414-5121-4048-B157-A3BE8E1DE091"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YandexWeather/Application/Services/LocationManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "locationManager(_:didUpdateLocations:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3861FB28-D023-4147-848B-E8B6EF89A136"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YandexWeather/Application/Flow/MainViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "267A1B6A-EC36-4453-A0EC-3C26C27FA7E0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YandexWeather/Application/Services/LocationManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
             landmarkName = "init()"
             landmarkType = "7">
          </BreakpointContent>
@@ -23,16 +151,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "90FFA722-4FFF-4D28-ADB9-3BD22C5B59E9"
+            uuid = "FB3C8B4E-244D-42E6-822C-4764D848E9EF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YandexWeather/Application/Services/LocationManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "locationManager(_:didChangeAuthorization:)"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "locationManager(_:didFailWithError:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -46,15 +46,7 @@ class CityWeather : Equatable {
         self.humidity = json["fact"]["humidity"].intValue
         self.season = json["fact"]["season"].stringValue
         let forecastsJSON = json["forecasts"].arrayValue
-        self.forecasts = forecastsJSON.map { Forecast(from: $0) }
-        
-//        // скачиваем картинку погоды
-//        if let url = URL(string: self.icon) {
-//            let data = try? Data(contentsOf: url)
-//            let anSVGImage: SVGKImage = SVGKImage(data: data)
-//            self.weatherImage = anSVGImage.uiImage
-//        }
-        
+        self.forecasts = forecastsJSON.map { Forecast(from: $0) }        
         
     }
     
@@ -98,12 +90,6 @@ class Forecast : Equatable {
         self.wind_speed = json["parts"]["day"]["wind_speed"].intValue
         self.humidity = json["parts"]["day"]["humidity"].intValue
         
-//        // скачиваем картинку погоды
-//        if let url = URL(string: self.icon) {
-//            let data = try? Data(contentsOf: url)
-//            let anSVGImage: SVGKImage = SVGKImage(data: data)
-//            self.weatherImage = anSVGImage.uiImage
-//        }
         
     }
 

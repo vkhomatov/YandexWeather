@@ -22,16 +22,7 @@ class CityWeatherViewController: UIViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
                 self.reloadHeaderAndFooter()
-            }
-        }
-    }
-    
-    var weather = CityWeather() {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.reloadHeaderAndFooter()
-                self.title = self.getDayInfo(dateString: self.weather.forecasts[0].date, dateFormat: "EEEE" ) + ", " + self.getDayInfo(dateString: self.weather.forecasts[0].date, dateFormat: "dd MMMM")
+                self.title = self.getDayInfo(dateString: self.place.weather.forecasts[0].date, dateFormat: "EEEE" ) + ", " + self.getDayInfo(dateString: self.place.weather.forecasts[0].date, dateFormat: "dd MMMM")
             }
         }
     }
@@ -45,7 +36,8 @@ class CityWeatherViewController: UIViewController {
     
     
     func reloadHeaderAndFooter() {
-        if self.weather.forecasts.count > 0 {
+        
+        if self.place.weather.forecasts.count > 0 {
             footer.sinriseNameLabel.text = "рассвет"
             footer.sunsetNameLabel.text = "закат"
             footer.humidityNameLabel.text = "влажность"
@@ -53,13 +45,13 @@ class CityWeatherViewController: UIViewController {
             
             header.objectNameLabel.text = self.place.name
             header.objectDescriptionLabel.text = self.place.title
-            header.temperatureLabel.text = String(self.weather.temp) + "°"
-            header.weatherIconImageView.image = self.weather.weatherImage
+            header.temperatureLabel.text = String(self.place.weather.temp) + "°"
+            header.weatherIconImageView.image = self.place.weather.weatherImage
             
-            footer.sinriseLabel.text = String(self.weather.forecasts[0].sunrise)
-            footer.sunsetLabel.text = String(self.weather.forecasts[0].sunset)
-            footer.humidityLabel.text = String(self.weather.forecasts[0].humidity) + " %"
-            footer.windLabel.text = String(self.weather.forecasts[0].wind_speed) + " m/s"
+            footer.sinriseLabel.text = String(self.place.weather.forecasts[0].sunrise)
+            footer.sunsetLabel.text = String(self.place.weather.forecasts[0].sunset)
+            footer.humidityLabel.text = String(self.place.weather.forecasts[0].humidity) + " %"
+            footer.windLabel.text = String(self.place.weather.forecasts[0].wind_speed) + " m/s"
             
             headerHeight = header.getHeight()
             header.setNeedsLayout()
@@ -101,10 +93,12 @@ extension CityWeatherViewController : UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifire, for: indexPath) as? CityWeatherCell else {return UITableViewCell()}
         cell.selectionStyle = .none
-        cell.dayNameLabel.text = getDayInfo(dateString: self.weather.forecasts[indexPath.row].date, dateFormat: "EEEE")
-        cell.temperatureMaxLabel.text = String(self.weather.forecasts[indexPath.row].temp_max)
-        cell.temperatureMinLabel.text = String(self.weather.forecasts[indexPath.row].temp_min)
-        cell.weatherIconImageView.image = self.weather.forecasts[indexPath.row].weatherImage
+        if self.place.weather.forecasts.count > indexPath.row {
+            cell.dayNameLabel.text = getDayInfo(dateString: self.place.weather.forecasts[indexPath.row].date, dateFormat: "EEEE")
+            cell.temperatureMaxLabel.text = String(self.place.weather.forecasts[indexPath.row].temp_max)
+            cell.temperatureMinLabel.text = String(self.place.weather.forecasts[indexPath.row].temp_min)
+            cell.weatherIconImageView.image = self.place.weather.forecasts[indexPath.row].weatherImage
+        }
         return cell
         
     }

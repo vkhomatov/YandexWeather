@@ -11,8 +11,6 @@ import MapKit
 import CoreLocation
 import SVGKit
 
-//import Contacts
-
 
 struct UserPlace: Equatable {
     
@@ -24,7 +22,10 @@ struct UserPlace: Equatable {
     var title = String()
     var coordinates = CLLocationCoordinate2D()
     var time = String()
+    var weather = CityWeather()
+    
 }
+
 
 class MainViewController: UIViewController {
     
@@ -35,55 +36,41 @@ class MainViewController: UIViewController {
     var sendDataTocityWeatherVC: (() -> Void)?
     
     private var tableView = UITableView()
-    private let weather = WeatherService()
+    private let weatherService = WeatherService()
     private let identifire = "cityCell"
     private var currentLocation = CLLocation()
     private var refreshControl = UIRefreshControl()
     private var weatherImages = [String : UIImage?]()
-
+    
     var places = [UserPlace]()  {
         didSet {
             DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
-    
-    var weathers = [CityWeather]() {
-        didSet {
-            
-            DispatchQueue.main.async {
-                if !self.weathers.isEmpty {
+                if self.places[self.places.count-1].weather.forecasts.count != 0 {
                     self.tableView.reloadData()
                     self.title = "Моя погода"
                 }
             }
         }
-        
     }
-    
-   // var myWeather = [UserPlace : CityWeather]()
     
     
     fileprivate func getCurrentLocation() {
         self.locationManager.getNewLocation = { [weak self] in
             guard let self = self else { return }
             
-            self.currentLocation = self.locationManager.userLocation
-            
-            self.locationManager.getPlace(for: self.currentLocation) { placeMark in
+            self.locationManager.getPlace(for: self.locationManager.userLocation) { placeMark in
                 if let placeMark = placeMark  {
                     
                     let mkPlacemark = MKPlacemark(placemark: placeMark)
                     
                     guard let name = mkPlacemark.name,
-                          let title = mkPlacemark.title
+                        let title = mkPlacemark.title
                         else { return }
                     
                     var place = UserPlace()
                     
                     
-                 //   print("mkPlacemark.timeZone?.secondsFromGMT() =\(placeMark.timeZone?.description)")
+                    //   print("mkPlacemark.timeZone?.secondsFromGMT() =\(placeMark.timeZone?.description)")
                     place.coordinates = mkPlacemark.coordinate
                     place.name = name
                     place.title = title
@@ -91,7 +78,7 @@ class MainViewController: UIViewController {
                     if !self.places.contains(place) {
                         self.places.append(place)
                         
-                        self.CityWeatherLoad(coordinates: place.coordinates, days: "7")
+                        self.CityWeatherLoad(place: place, days: "7")
                         //self.tableView.reloadData()
                     }
                     
@@ -99,12 +86,13 @@ class MainViewController: UIViewController {
                     print("locationManager.getPlace: объект не найден")
                 }
             }
-            self.locationManager.locationManager.stopUpdatingLocation()
+            self.locationManager.stopUpdatingLocation()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         self.title = "Моя погода"
         createTable()
@@ -114,26 +102,28 @@ class MainViewController: UIViewController {
         tableView.refreshControl = refreshControl
         refreshControl.tintColor = .systemYellow
         
+        locationManager.requestLocation()
         getCurrentLocation()
         addWeather()
-
+        
+        
     }
     
     
     func addWeather() {
-       // DispatchQueue.main.async {
-            self.cityAddVC.addNewUserPlace = { [weak self] in
-                guard let self = self else { return }
-                let newPlace = self.cityAddVC.place
-                if !self.places.contains(newPlace) {
-                    self.places.append(newPlace)
-                    self.CityWeatherLoad(coordinates: newPlace.coordinates, days: "7")
-                    print("userPlaces.append: объект \(String(describing: newPlace.name) ) был УСПЕШНО добавлен")
-                } else {
-                    print("userPlaces.append: объект \(String(describing: newPlace.name) ) был добавлен ранее")
-                }
+        // DispatchQueue.main.async {
+        self.cityAddVC.addNewUserPlace = { [weak self] in
+            guard let self = self else { return }
+            let newPlace = self.cityAddVC.place
+            if !self.places.contains(newPlace) {
+                self.places.append(newPlace)
+                self.CityWeatherLoad(place: newPlace, days: "7")
+                print("userPlaces.append: объект \(String(describing: newPlace.name) ) был УСПЕШНО добавлен")
+            } else {
+                print("userPlaces.append: объект \(String(describing: newPlace.name) ) был добавлен ранее")
             }
-      //  }
+        }
+        //  }
         
         //        self.cityAddVC.addNewUserPlace = { [weak self] in
         //            guard let self = self else { return }
@@ -154,77 +144,56 @@ class MainViewController: UIViewController {
     }
     
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//    }
+    // загрузка с сервера и кеширование картинок с погодой в словать
+    private func loadImages(icon: String, weather: CityWeather?, forecast: Forecast?) {
+        
+        if self.weatherImages[icon] == nil {
+            // скачиваем картинку погоды
+            if let url = URL(string: icon) {
+                let data = try? Data(contentsOf: url)
+                let anSVGImage: SVGKImage = SVGKImage(data: data)
+                if (weather != nil) {
+                    weather?.weatherImage = anSVGImage.uiImage
+                } else if (forecast != nil) {
+                    forecast?.weatherImage = anSVGImage.uiImage
+                }
+                self.weatherImages.updateValue(weather?.weatherImage, forKey: icon)
+            }
+        } else {
+            if let image = self.weatherImages[icon] {
+                if let image = image {
+                    if (weather != nil) {
+                        weather?.weatherImage = image
+                    } else if (forecast != nil) {
+                        forecast?.weatherImage = image
+                    }
+                }
+            }
+        }
+        
+    }
     
-    
-    func CityWeatherLoad(coordinates: CLLocationCoordinate2D, days: String) {
+    func CityWeatherLoad(place: UserPlace, days: String) {
         
         self.title = "Загрузка данных ..."
         
-        self.weather.loadWeatherData(coordinate: coordinates, days: days) { [weak self] result in
+        self.weatherService.loadWeatherData(coordinate: place.coordinates, days: days) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case let .success(weather):
                 
-                
-                // загрузка с сервера и кеширование картинок с погодой в словать
-                
-                if self.weatherImages[weather.icon] == nil {
-                    // скачиваем картинку погоды
-                    if let url = URL(string: weather.icon) {
-                        let data = try? Data(contentsOf: url)
-                        let anSVGImage: SVGKImage = SVGKImage(data: data)
-                        weather.weatherImage = anSVGImage.uiImage
-                        self.weatherImages.updateValue(weather.weatherImage, forKey: weather.icon)
-                        //print("Wheather: картинка загружена из сети в словорь : \n\(weather.icon)")
-
-                    }
-                } else {
-                    if let image = self.weatherImages[weather.icon] {
-                        if let image = image {
-                            weather.weatherImage = image
-                        }
-                        //print("Wheather: картинка загружена из словоря : \n\(weather.icon)")
-                    }
-                }
+                self.loadImages(icon: weather.icon, weather: weather, forecast: nil)
                 
                 for forecast in weather.forecasts {
-                    if self.weatherImages[forecast.icon] == nil {
-                        // скачиваем картинку погоды
-                        if let url = URL(string: forecast.icon) {
-                            let data = try? Data(contentsOf: url)
-                            let anSVGImage: SVGKImage = SVGKImage(data: data)
-                            forecast.weatherImage = anSVGImage.uiImage
-                            self.weatherImages.updateValue(forecast.weatherImage, forKey: forecast.icon)
-                          //  print("Forecast: картинка загружена из сети в словорь : \n\(weather.icon)")
-                        }
-                    } else {
-                        if let image = self.weatherImages[forecast.icon] {
-                            if let image = image {
-                                forecast.weatherImage = image
-                            }
-                          //  print("Forecast: картинка загружена из словоря : \n\(forecast.icon)")
-                        }
-                    }
+                    self.loadImages(icon: weather.icon, weather: nil, forecast: forecast)
                 }
-            
-                for place in self.places  {
-                    if (place.coordinates.latitude == coordinates.latitude) && (place.coordinates.longitude == coordinates.longitude) {
-                        if let num = self.places.firstIndex(of: place) {
-                            if self.weathers.count-1 < num {
-                                self.weathers.append(CityWeather())
-                            }
-                            if self.places.count-1 < num {
-                                self.weathers.append(contentsOf: repeatElement(CityWeather(), count: num - self.weathers.count))
-                            }
-                            self.weathers[num] = weather
-                        }
-                    }
+                
+                
+                if let num = self.places.firstIndex(of: place) {
+                    self.places[num].weather = weather
                 }
-    
+                
             case .failure(_):
                 print("не удалось загрузить погодные данные для объекта")
                 self.title = "Моя погода [нет данных]"
@@ -253,22 +222,14 @@ class MainViewController: UIViewController {
     
     
     @objc private func getNewWeather() {
-        //self.weathers.removeAll()
-       
-
-
+        
         for place in self.places {
-          //  print("City = \(place.name), coord: \(place.coordinates)")
-            self.CityWeatherLoad(coordinates: place.coordinates, days: "7")
-            print("self.weathers.count = \(self.weathers.count)")
-            print("self.places.count = \(self.places.count)")
-          //  print("Погода №2 \(self.weathers.count-1)")
-
+            self.CityWeatherLoad(place: place, days: "7")
         }
         
         tableView.refreshControl?.endRefreshing()
     }
-
+    
     
     @objc private func addNewCity() {
         present(self.cityAddVC, animated: true, completion: nil)
@@ -281,10 +242,9 @@ class MainViewController: UIViewController {
 extension MainViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
-        if self.places.count > indexPath.section && self.weathers.count > indexPath.section {
+        
+        if self.places.count > indexPath.section  {
             cityWeatherVC.place = self.places[indexPath.section]
-            cityWeatherVC.weather = self.weathers[indexPath.section]
             navigationController?.pushViewController(self.cityWeatherVC, animated: true)
         }
         
@@ -293,9 +253,8 @@ extension MainViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            if self.places.count >= indexPath.section && self.weathers.count >= indexPath.section {
+            if self.places.count >= indexPath.section {
                 self.places.remove(at: indexPath.section)
-                self.weathers.remove(at: indexPath.section)
             }
         }
         
@@ -312,14 +271,14 @@ extension MainViewController : UITableViewDelegate {
 extension MainViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifire, for: indexPath) as? MainCityCell else {return UITableViewCell()}
         cell.selectionStyle = .none
-        cell.objectNameLabel.text = self.places[indexPath.section].name
-        cell.objectDescriptionLabel.text = self.places[indexPath.section].title
-        if weathers.count > indexPath.section {
-            cell.temperatureLabel.text = String(self.weathers[indexPath.section].temp) + "°"
-            cell.weatherIconImageView.image = self.weathers[indexPath.section].weatherImage
+        if self.places.count > indexPath.section {
+            cell.objectNameLabel.text = self.places[indexPath.section].name
+            cell.objectDescriptionLabel.text = self.places[indexPath.section].title
+            cell.temperatureLabel.text = String(self.places[indexPath.section].weather.temp) + "°"
+            cell.weatherIconImageView.image = self.places[indexPath.section].weather.weatherImage
         }
         return cell
     }

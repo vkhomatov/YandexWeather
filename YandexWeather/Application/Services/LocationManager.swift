@@ -10,9 +10,9 @@ import UIKit
 import CoreLocation
 
 
-class LocationManager: NSObject {
+class LocationManager: CLLocationManager {
     
-    let locationManager = CLLocationManager()
+    //let locationManager = CLLocationManager()
     var userLocation = CLLocation()
     var getNewLocation: (() -> Void)?
 
@@ -20,11 +20,11 @@ class LocationManager: NSObject {
     
     override init() {
         super.init()
-        self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-       // self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
-
+        self.delegate = self
+        self.desiredAccuracy = kCLLocationAccuracyBest
+     //   self.requestAlwaysAuthorization()
+        self.requestWhenInUseAuthorization()
+        //self.locationManager.startUpdatingLocation()
     }
     
 }
@@ -35,12 +35,15 @@ extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager,
                          didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
-        case .notDetermined       : print("didChangeAuthorization: notDetermined")
+        case .notDetermined       :
+            self.requestLocation()
+            print("didChangeAuthorization: notDetermined")
         case .authorizedWhenInUse :
-            self.locationManager.startUpdatingLocation()
+          self.requestLocation()
             print("didChangeAuthorization: authorizedWhenInUse")
+            
         case .authorizedAlways    :
-           // self.locationManager.startUpdatingLocation()
+          //  self.startUpdatingLocation()
             print("didChangeAuthorization: authorizedAlways")
         case .restricted          : print("didChangeAuthorization: restricted")
         case .denied              : print("didChangeAuthorization: denied")
@@ -49,13 +52,20 @@ extension LocationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.userLocation = locations[0] as CLLocation
-    //    manager.allowsBackgroundLocationUpdates = true
-        if let callback = self.getNewLocation {
-            callback()
+        
+        if let location = locations.first {
+            self.userLocation = location
+            if let callback = self.getNewLocation {
+                callback()
+            }
         }
+    //    manager.allowsBackgroundLocationUpdates = true
+       
     }
     
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("\(#function) = \(error.localizedDescription)")
+    }
     
 }
 
