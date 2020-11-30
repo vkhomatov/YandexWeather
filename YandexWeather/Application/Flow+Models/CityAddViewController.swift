@@ -8,8 +8,6 @@
 
 import UIKit
 import MapKit
-import PinLayout
-
 
 
 class CityAddViewController: UIViewController, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
@@ -39,16 +37,9 @@ class CityAddViewController: UIViewController, UISearchBarDelegate, MKLocalSearc
         searchCompleter.delegate = self
         createTable()
         createSearchBar()
-        
+        dismissKey()        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        //        if let callback = self.addNewUserPlace {
-        //            callback()
-        //        }
-        
-    }
     
     private func createSearchBar() {
         
@@ -78,15 +69,12 @@ class CityAddViewController: UIViewController, UISearchBarDelegate, MKLocalSearc
         searchCompleter.queryFragment = searchText
         if searchText == "" {
             self.searchResults.removeAll()
-          //  self.searchResultsTable.reloadData()
         }
     }
     
     
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {        
         searchResults = completer.results
-        //searchResultsTable.reloadData()
     }
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
@@ -116,14 +104,14 @@ extension CityAddViewController: UITableViewDataSource {
         
     }
     
-    func localTime(in timeZone: String) -> String {
-        
-        let f = ISO8601DateFormatter()
-        f.formatOptions = [.withInternetDateTime]
-        f.timeZone = TimeZone(identifier: timeZone)
-        return f.string(from: Date())
-        
-    }
+//    func localTime(in timeZone: String) -> String {
+//        
+//        let f = ISO8601DateFormatter()
+//        f.formatOptions = [.withInternetDateTime]
+//        f.timeZone = TimeZone(identifier: timeZone)
+//        return f.string(from: Date())
+//        
+//    }
 }
 
 extension CityAddViewController: UITableViewDelegate {
@@ -188,4 +176,17 @@ extension CityAddViewController: UITableViewDelegate {
 }
 
 
-
+extension CityAddViewController {
+    
+    func dismissKey()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self, action: #selector(CityAddViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard()
+    {
+        view.endEditing(true)
+    }
+}

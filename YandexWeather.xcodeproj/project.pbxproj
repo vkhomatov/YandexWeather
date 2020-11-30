@@ -23,6 +23,9 @@
 		5851C5AF255303ED000BA897 /* CityWeatherTableFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5851C5AE255303ED000BA897 /* CityWeatherTableFooter.swift */; };
 		5851C5B325555F08000BA897 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5851C5B225555F08000BA897 /* NetworkMonitor.swift */; };
 		5888CD5B2570289A007549E4 /* Pods_YandexWeather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C13A49BF4F1B6A4F735207 /* Pods_YandexWeather.framework */; };
+		5888CD5F2570B645007549E4 /* UserPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5888CD5E2570B645007549E4 /* UserPlace.swift */; };
+		5888CD612570B952007549E4 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5888CD602570B952007549E4 /* MainViewModel.swift */; };
+		589A4C7D25735373005D820D /* UDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589A4C7C25735373005D820D /* UDService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +49,9 @@
 		5851C5AC2552FA97000BA897 /* CityWeatherTableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherTableHeader.swift; sourceTree = "<group>"; };
 		5851C5AE255303ED000BA897 /* CityWeatherTableFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherTableFooter.swift; sourceTree = "<group>"; };
 		5851C5B225555F08000BA897 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		5888CD5E2570B645007549E4 /* UserPlace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlace.swift; sourceTree = "<group>"; };
+		5888CD602570B952007549E4 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		589A4C7C25735373005D820D /* UDService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +118,7 @@
 				5851C59F254FCA62000BA897 /* View */,
 				5851C59A254F7964000BA897 /* Entities */,
 				5851C591254E71C2000BA897 /* Common */,
-				5851C592254E71CB000BA897 /* Flow */,
+				5851C592254E71CB000BA897 /* Flow+Models */,
 				5851C593254E72E1000BA897 /* Services */,
 			);
 			path = Application;
@@ -127,14 +133,15 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		5851C592254E71CB000BA897 /* Flow */ = {
+		5851C592254E71CB000BA897 /* Flow+Models */ = {
 			isa = PBXGroup;
 			children = (
 				5851C57F254E6C16000BA897 /* MainViewController.swift */,
+				5888CD602570B952007549E4 /* MainViewModel.swift */,
 				5851C59D254FBB6A000BA897 /* CityAddViewController.swift */,
 				5851C5A62552F1F6000BA897 /* CityWeatherViewController.swift */,
 			);
-			path = Flow;
+			path = "Flow+Models";
 			sourceTree = "<group>";
 		};
 		5851C593254E72E1000BA897 /* Services */ = {
@@ -143,6 +150,7 @@
 				5851C594254EB01A000BA897 /* WeatherService.swift */,
 				5851C598254EC43F000BA897 /* LocationManager.swift */,
 				5851C5B225555F08000BA897 /* NetworkMonitor.swift */,
+				589A4C7C25735373005D820D /* UDService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -151,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				5851C5A4255018D0000BA897 /* CityWeather.swift */,
+				5888CD5E2570B645007549E4 /* UserPlace.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -290,8 +299,11 @@
 			files = (
 				5851C5A72552F1F6000BA897 /* CityWeatherViewController.swift in Sources */,
 				5851C5AF255303ED000BA897 /* CityWeatherTableFooter.swift in Sources */,
+				5888CD5F2570B645007549E4 /* UserPlace.swift in Sources */,
 				5851C5AD2552FA97000BA897 /* CityWeatherTableHeader.swift in Sources */,
+				589A4C7D25735373005D820D /* UDService.swift in Sources */,
 				5851C5A5255018D0000BA897 /* CityWeather.swift in Sources */,
+				5888CD612570B952007549E4 /* MainViewModel.swift in Sources */,
 				5851C580254E6C16000BA897 /* MainViewController.swift in Sources */,
 				5851C599254EC43F000BA897 /* LocationManager.swift in Sources */,
 				5851C5A1254FCEA8000BA897 /* MainCityCell.swift in Sources */,

@@ -6,9 +6,8 @@
 //  Copyright © 2020 Macrohard. All rights reserved.
 //
 
-import SwiftyJSON
-import SVGKit
 
+import SwiftyJSON
 
 class CityWeather : Equatable {
     

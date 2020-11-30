@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PinLayout
 
 class CityWeatherTableHeader: UIView {
     
