@@ -36,11 +36,12 @@ class MainViewModel {
                 callback()
             }
             
-            DispatchQueue.global().async {
-                self.udService.saveToUd(places: self.places)
-                print("\(#function) - udService.saveToUd.count = \(self.places.count)")
+        //    DispatchQueue.global().async {
+
+             self.udService.saveToUd(places: self.places)
+             print("\(#function) - udService.saveToUd.count = \(self.places.count)")
                 
-            }
+        //    }
         }
     }
     
@@ -64,12 +65,12 @@ class MainViewModel {
                         let title = mkPlacemark.title
                         else { return }
                     
-                    var place = UserPlace()
+                    let place = UserPlace(name: name, title: title, latitude: mkPlacemark.coordinate.latitude, longitude: mkPlacemark.coordinate.longitude)
                     
                     //   print("mkPlacemark.timeZone?.secondsFromGMT() =\(placeMark.timeZone?.description)")
-                    place.coordinates = mkPlacemark.coordinate
-                    place.name = name
-                    place.title = title
+//                    place.coordinates = mkPlacemark.coordinate
+//                    place.name = name
+//                    place.title = title
                     
                     if !self.places.contains(place) {
                         self.places.append(place)
@@ -142,7 +143,7 @@ class MainViewModel {
             
         }
         
-        self.weatherService.loadWeatherData(coordinate: place.coordinates, days: days) { [weak self] result in
+        self.weatherService.loadWeatherData(latitude: place.latitude, longitude: place.longitude, days: days) { [weak self] result in
             guard let self = self else { return }
             
             switch result {

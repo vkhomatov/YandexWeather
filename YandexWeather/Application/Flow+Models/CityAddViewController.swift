@@ -132,9 +132,10 @@ extension CityAddViewController: UITableViewDelegate {
               //  let placemark = response?.mapItems[0].placemark
                 else { return }
             
-            self.place.coordinates = coordinate
-            self.place.name = name
-            self.place.title = title
+            self.place = UserPlace(name: name, title: title, latitude: coordinate.latitude, longitude: coordinate.longitude)
+//            self.place.coordinates = coordinate
+//            self.place.name = name
+//            self.place.title = title
     
 //            print("placemark = \(placemark)")
 //            

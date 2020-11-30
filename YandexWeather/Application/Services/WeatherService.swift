@@ -42,12 +42,12 @@ class WeatherService {
     }()
     
     
-    func loadWeatherData(coordinate: CLLocationCoordinate2D, days: String, completion: ((Swift.Result<CityWeather, Error>) -> Void)? = nil) {
+    func loadWeatherData(latitude: Double, longitude: Double, days: String, completion: ((Swift.Result<CityWeather, Error>) -> Void)? = nil) {
         
         let parameters: Parameters = [
             
-            "lon": coordinate.longitude,
-            "lat": coordinate.latitude,
+            "lat": latitude,
+            "lon": longitude,
             "lang": self.lang,
             "limit": days,
             "hours": self.hours,

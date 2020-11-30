@@ -35,9 +35,7 @@ class MainViewController: UIViewController {
         if model.udService.placeCount != nil  {
             model.places = model.udService.readFromUD()
             print("\(#function) -  model.places.count = \(model.places.count)")
-              for place in model.places {
-                      model.cityWeatherLoad(place: place, days: model.forecastDays)
-                  }
+            getNewWeather()
             //  print("model.udService.readFromUD().count = \(model.udService.readFromUD().count)")
         } else {
             // print("model.udService.readFromUD().count = \(model.udService.readFromUD().count)")
