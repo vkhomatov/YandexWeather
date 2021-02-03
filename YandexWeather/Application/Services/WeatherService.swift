@@ -34,7 +34,7 @@ class WeatherService {
         var defaultHeaders = HTTPHeaders.default
         
         /// заколовок запроса  =  ключ пользователя API Яндекс погоды, ключ нужно заменить на свой
-        defaultHeaders["X-Yandex-API-Key"] = "bf66761c-5cf9-4ade-8a31-a4f617ef280e"
+        defaultHeaders["X-Yandex-API-Key"] = "dca071eb-bd87-4d41-8ba9-23d9f10aab22"
         
         configuration.headers = defaultHeaders
         let session = Alamofire.Session(configuration: configuration)
@@ -56,7 +56,7 @@ class WeatherService {
         ]
         
         
-        WeatherService.session.request(self.baseUrl, method: .get, parameters: parameters).responseJSON { repsonse in
+        WeatherService.session.request(self.baseUrl, method: .get, parameters: parameters).responseJSON  { repsonse in
             
             switch repsonse.result {
                 

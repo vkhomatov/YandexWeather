@@ -116,9 +116,9 @@ extension MainViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if model.places.count > indexPath.section  {
+        if model.places.count > indexPath.section && model.places[indexPath.section].weather.forecasts.count > 0 {
             model.cityWeatherVC.place = model.places[indexPath.section]
-            navigationController?.pushViewController(model.cityWeatherVC, animated: true)
+               navigationController?.pushViewController(model.cityWeatherVC, animated: true)
         }
         
     }

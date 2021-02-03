@@ -16,6 +16,7 @@ class CityWeatherViewController: UIViewController {
     private var header = CityWeatherTableHeader()
     private var footer = CityWeatherTableFooter()
     private var headerHeight = CGFloat()
+    private var date = Date()
     
     var place = UserPlace() {
         didSet {
@@ -31,7 +32,6 @@ class CityWeatherViewController: UIViewController {
         super.viewDidLoad()
         createTable()
         self.view.backgroundColor = .systemYellow
-        
     }
     
     
